@@ -25,6 +25,19 @@
 
 -
 
+## Practice checkpoints
+
+### YYYY-MM-DD — Topic
+
+- Intended outcome:
+- Commands or actions (redacted summary):
+- Verification evidence:
+- Result: passed | partially passed | failed | unverified
+- Demonstrated skill:
+- Weak point:
+- Feedback:
+- Next safe exercise:
+
 ## Next lesson
 
 - Topic:
