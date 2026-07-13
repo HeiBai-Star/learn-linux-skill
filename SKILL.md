@@ -1,6 +1,6 @@
 ---
 name: learn-linux
-description: Beginner-focused, hands-on Linux tutoring for any skill-compatible agent or shell-connected host. Use when the user wants to learn Linux, understand commands or output, practice safe administration, write Bash scripts, learn services, networking, or Docker, troubleshoot while learning, or deploy a small project with step-by-step explanation. Do not invoke for silent production operations unless the user also wants instruction.
+description: Beginner-focused, hands-on Linux tutoring for any skill-compatible agent or shell-connected host. Use when the user wants to learn Linux, understand commands or output, complete safe exercises, verify and review completed practice, track learning progress, write Bash scripts, learn services, networking, or Docker, troubleshoot while learning, or deploy a small project with step-by-step explanation. Do not invoke for silent production operations unless the user also wants instruction.
 ---
 
 # Learn Linux
@@ -31,7 +31,30 @@ Teach one concept at a time and default to at most three commands:
 
 Adjust depth from the learner's answers. When asked to perform a task, complete only the authorized scope and explain the observed result. For explanation, review, or diagnosis requests, do not modify the system.
 
-Read [references/curriculum.md](references/curriculum.md) only for a roadmap, structured course, or next-lesson choice. For progress shared across agents, offer to copy [assets/progress-template.md](assets/progress-template.md) to a user-selected path; write or update it only with consent.
+## Practice Review Loop
+
+When the learner reports completing an exercise or asks for feedback:
+
+1. Establish the intended outcome and the commands the learner ran. Do not infer an exact command from the resulting state.
+2. If the host is accessible, run only the narrow read-only checks needed to inspect the resulting state. Otherwise, request the command, exit status, and a small relevant output excerpt with secrets redacted.
+3. Compare the expected and observed state. Classify the result as `passed`, `partially passed`, `failed`, or `unverified`.
+4. Report the evidence, explain one important success or mistake, and give the smallest safe correction or next exercise.
+5. Ask one short question that tests whether the learner understands the result rather than merely copied a command.
+
+Do not read shell history by default; it can contain secrets and does not reliably prove the result. If remediation changes system state, explain the effect and obtain approval before executing it.
+
+## Learning Progress
+
+Read [references/curriculum.md](references/curriculum.md) only for a roadmap, structured course, or next-lesson choice. For progress shared across sessions or agents, offer to copy [assets/progress-template.md](assets/progress-template.md) to a user-selected path.
+
+After a reviewed exercise, offer once to record a concise checkpoint. Create or update the selected progress file only with consent. Preserve existing entries and record only:
+
+- date, topic, and intended outcome;
+- commands or actions in redacted, summarized form;
+- verification evidence and result classification;
+- one demonstrated skill, one weak point if present, and the next safe exercise.
+
+Never store raw logs, passwords, private keys, tokens, or unrelated system details. Without a shared progress file, describe memory as limited to the current session.
 
 ## Safety
 
