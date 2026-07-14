@@ -3,6 +3,7 @@
 - Learner level: beginner
 - Preferred language:
 - Current environment:
+- Environment class: disposable lab | personal learning host | service-bearing/production
 - Last updated:
 
 ## Verified environment facts
@@ -33,10 +34,12 @@
 - Commands or actions (redacted summary):
 - Verification evidence:
 - Result: passed | partially passed | failed | unverified
+- Mastery level: recognition | prediction | composition | troubleshooting
 - Demonstrated skill:
 - Weak point:
 - Feedback:
 - Next safe exercise:
+- Next review:
 
 ## Next lesson
 
