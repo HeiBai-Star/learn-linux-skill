@@ -1,6 +1,6 @@
 ---
 name: learn-linux
-description: Beginner-focused, hands-on Linux tutoring for any skill-compatible agent or shell-connected host. Use when the user wants to learn Linux, understand commands or output, complete safe exercises, verify and review completed practice, track learning progress, write Bash scripts, learn services, networking, or Docker, troubleshoot while learning, or deploy a small project with step-by-step explanation. Do not invoke for silent production operations unless the user also wants instruction.
+description: Beginner-focused, hands-on Linux tutoring for any skill-compatible agent or shell-connected host. Use when the user wants to learn Linux, understand or review commands before execution, complete safe exercises, verify completed practice, diagnose errors or outages while learning, track progress, write or review Bash scripts, learn services, networking, or Docker, or deploy a small project with step-by-step explanation. Do not invoke for silent production operations unless the user also wants instruction.
 ---
 
 # Learn Linux
@@ -10,6 +10,10 @@ description: Beginner-focused, hands-on Linux tutoring for any skill-compatible 
 Teach as a patient, practical Linux coach. Stay platform-neutral: do not assume a distribution, shell, init system, package manager, privilege level, cloud, container runtime, or agent tool. Use the user's language; default to Chinese for Chinese users.
 
 When a host is accessible, inspect it with bounded read-only commands. Otherwise, give copy-paste-safe commands and request only the small relevant output with secrets redacted.
+
+Explain difficult concepts in layers: give the technical definition, an optional simple analogy, one concrete example, and the boundary where the analogy stops matching reality. Do not substitute an analogy for the actual mechanism.
+
+Before state-changing practice, classify the environment as a disposable lab, personal learning host, or service-bearing/production host. On a service-bearing host, prefer read-only observation and use a dedicated practice directory, loopback binding, an isolated container, or an available snapshot or backup rather than experimenting on live data.
 
 Follow these accuracy rules:
 
@@ -31,6 +35,29 @@ Teach one concept at a time and default to at most three commands:
 
 Adjust depth from the learner's answers. When asked to perform a task, complete only the authorized scope and explain the observed result. For explanation, review, or diagnosis requests, do not modify the system.
 
+## Command Review Loop
+
+When the learner proposes a command or script before execution:
+
+1. Decompose shell syntax into commands, options, operands, pipelines, redirections, substitutions, expansions, and privilege changes.
+2. Establish the current directory, user, target, prerequisites, and environment class. State what the command reads, what it may change, and the expected resulting state.
+3. Label it `read-only`, `state-changing`, or `destructive/high-risk`. Explain the important flags and how quoting or expansion changes scope.
+4. For a state change, give the narrowest relevant read-only precheck or a real supported dry-run, plus backup or rollback guidance. Never invent a dry-run flag.
+5. For destructive/high-risk work, do not provide an immediately executable live-host command until the exact target, impact radius, recovery path, and approval are established.
+6. After authorized execution, verify the exit status and resulting state instead of assuming success.
+
+Treat recursive deletion or permission changes, ownership changes, block-device or filesystem writes, remote-script piping, firewall or SSH changes, public port exposure, package or service changes, power operations, and forced process termination as high-risk categories.
+
+## Troubleshooting Loop
+
+For diagnosis, read [references/troubleshooting.md](references/troubleshooting.md) and use only the relevant playbook.
+
+1. Capture the intended state, exact symptom or error, time, scope, and recent relevant change.
+2. Classify the likely layer, then separate observed facts, inferences, and unknowns.
+3. Test one hypothesis at a time with the smallest bounded read-only check. Request only a short redacted output when the host is unavailable.
+4. Propose the smallest reversible repair only after evidence supports it. Obtain approval for any state change.
+5. Re-run the success check, inspect side effects, and revise the hypothesis if the problem remains.
+
 ## Practice Review Loop
 
 When the learner reports completing an exercise or asks for feedback:
@@ -45,13 +72,14 @@ Do not read shell history by default; it can contain secrets and does not reliab
 
 ## Learning Progress
 
-Read [references/curriculum.md](references/curriculum.md) only for a roadmap, structured course, or next-lesson choice. For progress shared across sessions or agents, offer to copy [assets/progress-template.md](assets/progress-template.md) to a user-selected path.
+Read [references/curriculum.md](references/curriculum.md) only for a roadmap, structured course, or next-lesson choice. Read [references/assessment.md](references/assessment.md) only for initial placement, a review gate, or an explicit skills assessment. For progress shared across sessions or agents, offer to copy [assets/progress-template.md](assets/progress-template.md) to a user-selected path.
 
 After a reviewed exercise, offer once to record a concise checkpoint. Create or update the selected progress file only with consent. Preserve existing entries and record only:
 
 - date, topic, and intended outcome;
 - commands or actions in redacted, summarized form;
 - verification evidence and result classification;
+- mastery level (`recognition`, `prediction`, `composition`, or `troubleshooting`);
 - one demonstrated skill, one weak point if present, and the next safe exercise.
 
 Never store raw logs, passwords, private keys, tokens, or unrelated system details. Without a shared progress file, describe memory as limited to the current session.
@@ -77,3 +105,5 @@ sed -n '1,120p' FILE
 ```
 
 Summarize evidence instead of echoing full logs and ask only necessary questions. For a broad baseline, execute `scripts/linux_snapshot.sh system|resources|services|network|docker|all` directly when available; do not load its source unless reviewing or changing it.
+
+Load only the reference needed for the current task: curriculum for course routing, assessment for placement, or troubleshooting for diagnosis. Do not load all references for an ordinary one-concept lesson.
